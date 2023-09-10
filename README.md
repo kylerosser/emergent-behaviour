@@ -2,6 +2,7 @@
 A collection of graphics simulations that showcase how simple rules can be used to form complex emergent behaviours.
 
 Each example can be run using the `main.py` file in its corresponding folder.
+
 [Pygame](https://github.com/pygame/pygame) must be installed (`pip install pygame`)
 
 ## Life
