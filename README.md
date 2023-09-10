@@ -14,7 +14,7 @@ These rules are applied across all cells simultaneously at each iteration of the
 
 Use `SPACE` to pause/play the simulation and `MOUSE1` to toggle cells while paused.
 
-![Video Example](https://gyazo.com/808a513c629219a0107e01a2368792ab)
+<img src="images/life.gif" width="300" height="300">
 
 ## Boids
 [Boids](https://en.wikipedia.org/wiki/Boids) (bird-oids) is a simulation that models the flocking behavior of birds by applying three basic rules: 
@@ -25,6 +25,8 @@ Use `SPACE` to pause/play the simulation and `MOUSE1` to toggle cells while paus
 This results in realistic group formations of animal motion.
 
 Use `MOUSE1` to steer boids towards your mouse.
+
+<img src="images/boids.gif" width="300" height="300">
 
 ## Ants
 [Ant Colony Simulations](https://softologyblog.wordpress.com/2020/03/21/ant-colony-simulations/) model how ants forage for food, and bring it back to their nests using only pheromone trails for navigation.
