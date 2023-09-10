@@ -1,36 +1,36 @@
 import pygame
 
-CELLS_X = 70
+CELLS_X = 70 
 CELLS_Y = 70
+PIXELS_PER_CELL = 10
 FPS = 10
+BORN_NEIGHBORS = [3] # A dead cell will be reborn if it has this many neighbors
+SURVIVE_NEIGHBORS = [2, 3] # A living cell will survive if it has this many neighbors
+# ( All other living cells die )
+# Common rulesets include: B3/S23 (Conway's Game Of Life) and B36/S23 (HighLife)
 
-cells = [ [ False for x in range(100) ] for y in range(100) ]
+cells = [ [ False for y in range(CELLS_Y) ] for x in range(CELLS_X) ]
 
-cells[10][10] = True
-cells[11][10] = True
-cells[12][10] = True
-cells[10][9] = True
+running = True
+paused = True
+age = 0
 
-cells[20][20] = True
-cells[19][20] = True
-cells[18][20] = True
+pygame.init()
 
-cells[22][21] = True
-cells[22][20] = True
-cells[22][19] = True
+screen = pygame.display.set_mode((CELLS_X * PIXELS_PER_CELL, CELLS_Y * PIXELS_PER_CELL))
+pygame.display.set_caption('Game of Life')
 
-cells[2][0] = True
-cells[3][1] = True
-cells[3][2] = True
-cells[2][2] = True
-cells[1][2] = True
+clock = pygame.time.Clock()
+font = pygame.font.SysFont(None, 16)
 
 def update_cells():
     global cells
-    new_cells = [ [False for x in range(100)] for y in range(100)]
+    global age
 
-    for x in range(100):
-        for y in range(100):
+    new_cells = [ [False for y in range(CELLS_Y)] for x in range(CELLS_X)]
+
+    for x in range(CELLS_X):
+        for y in range(CELLS_Y):
             alive = cells[x][y]
             alive_neighbors = 0
 
@@ -48,34 +48,64 @@ def update_cells():
                         alive_neighbors += 1
             
             if alive:
-                new_cells[x][y] = (alive_neighbors == 2 or alive_neighbors == 3)
+                should_live = False
+                for n in SURVIVE_NEIGHBORS:
+                    if alive_neighbors == n:
+                        should_live = True
+                new_cells[x][y] = should_live
             else:
-                new_cells[x][y] = (alive_neighbors == 3)
+                should_live = False
+                for n in BORN_NEIGHBORS:
+                    if alive_neighbors == n:
+                        should_live = True
+                new_cells[x][y] = should_live
 
     cells = new_cells
+    age += 1
 
-pygame.init()
-screen = pygame.display.set_mode((CELLS_X * 10, CELLS_Y * 10))
-clock = pygame.time.Clock()
-running = True
+def draw_cells():
+    for x in range(CELLS_X):
+        for y in range(CELLS_Y):
+            alive = cells[x][y]
+            if alive:
+                pygame.draw.rect(screen, "white", pygame.Rect(x * PIXELS_PER_CELL, y * PIXELS_PER_CELL, PIXELS_PER_CELL, PIXELS_PER_CELL))
 
-while running:
+def draw_ui():
+    stats_string = f"age: {age}  fps: {FPS}"
+    stats_image = font.render(stats_string, True, 'gray')
+    controls_string = "[SPACE] to pause/play the simulation; [MOUSE1] to toggle cell"
+    controls_image = font.render(controls_string, True, 'gray')
+    screen.blit(stats_image, (10, 10))
+    screen.blit(controls_image, (10, 30))
+
+def handle_events():
+    global running
+    global paused
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                paused = not paused
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_position = pygame.mouse.get_pos()
+            cell_x = mouse_position[0] // PIXELS_PER_CELL
+            cell_y = mouse_position[1] // PIXELS_PER_CELL
+            cells[cell_x][cell_y] = not cells[cell_x][cell_y]
 
+while running:
     screen.fill("black")
 
-    update_cells()
+    handle_events()
 
-    for x in range(100):
-        for y in range(100):
-            alive = cells[x][y]
-            if alive:
-                pygame.draw.rect(screen, "white", pygame.Rect(x * 10, y * 10, 10, 10))
+    if not paused:
+        update_cells()
 
+    draw_cells()
+    draw_ui()
+    
     pygame.display.flip()
-
     clock.tick(FPS)
 
 pygame.quit()
