@@ -22,6 +22,8 @@ Use `SPACE` to pause/play the simulation and `MOUSE1` to toggle cells while paus
 
 This results in realistic group formations of animal motion.
 
+Use `MOUSE1` to steer boids towards your mouse.
+
 ## Ants
 [Ant Colony Simulations](https://softologyblog.wordpress.com/2020/03/21/ant-colony-simulations/) model how ants forage for food, and bring it back to their nests using only pheromone trails for navigation.
 
