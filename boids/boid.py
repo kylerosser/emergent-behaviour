@@ -9,7 +9,15 @@ class Boid():
         self.velocity = pygame.Vector2(random.uniform(-1, 1), random.uniform(-1, 1)).normalize() * config.MAX_SPEED
         self.acceleration = pygame.Vector2(0, 0)
 
+    def steer_towards_point(self, point):
+        steer_vector = (point - self.position).normalize() * config.MAX_SPEED
+        steer_vector -= self.velocity
+        if steer_vector.magnitude() > 0.000001:
+            steer_vector = steer_vector.clamp_magnitude(config.MAX_FORCE)
+        return steer_vector
+
     def separation(self, boids):
+        # Returns a steer vector towards the point with least amount of neighbouring boids
         steer_vector = pygame.Vector2(0, 0)
         n = 0
         for other_boid in boids:
@@ -24,7 +32,6 @@ class Boid():
         if steer_vector.magnitude() > 0:
             steer_vector = steer_vector.normalize()
             steer_vector *= config.MAX_SPEED
-            # Reynold's steering behaviour
             steer_vector -= self.velocity
             if steer_vector.magnitude() > 0.000001:
                 steer_vector = steer_vector.clamp_magnitude(config.MAX_FORCE)
@@ -32,6 +39,7 @@ class Boid():
         return steer_vector
 
     def alignment(self, boids):
+        # Returns a steer vector towards average velocity of neighbouring boids
         velocity_sum = pygame.Vector2(0, 0)
         n = 0
         for other_boid in boids:
@@ -53,6 +61,7 @@ class Boid():
 
 
     def cohesion(self, boids):
+        # Returns a steer vector towards average position of neighbouring boids
         position_sum = pygame.Vector2(0, 0)
         n = 0
         for other_boid in boids:
@@ -67,24 +76,32 @@ class Boid():
                 
                 return pygame.Vector2(0, 0)
             
-            steer_vector = (average_position - self.position).normalize() * config.MAX_SPEED
-            steer_vector -= self.velocity
-            steer_vector = steer_vector.clamp_magnitude(config.MAX_FORCE)
+            steer_vector = self.steer_towards_point(average_position)
             return steer_vector
         else:
             return pygame.Vector2(0, 0)
 
-                    
     
-    def update(self, boids):
+    def update(self, boids, move_towards_mouse, mouse_position):
+        # Calculate steering velocities for each rule
         seperation_velocity = self.separation(boids)
         alignment_velocity = self.alignment(boids)
         cohesion_velocity = self.cohesion(boids)
+        towards_mouse_velocity = pygame.Vector2(0, 0)
+        
+        # If mouse button is down, apply the mouse attraction rule
+        if move_towards_mouse:
+            distance = (mouse_position - self.position).magnitude()
+            if distance < config.TOWARDS_MOUSE_VISION:
+                towards_mouse_velocity = self.steer_towards_point(mouse_position)
+        
+        # Weight each velocity to taste, and add to acceleration
+        self.acceleration += seperation_velocity * config.SEPARATION_WEIGHT
+        self.acceleration += alignment_velocity * config.ALIGNMENT_WEIGHT
+        self.acceleration += cohesion_velocity * config.COHESION_WEIGHT
+        self.acceleration += towards_mouse_velocity * config.TOWARDS_MOUSE_WEIGHT
 
-        self.acceleration += seperation_velocity * 2
-        self.acceleration += alignment_velocity * 0.5
-        self.acceleration += cohesion_velocity
-
+        # Step velocity/position values
         self.velocity += self.acceleration
         if not self.velocity.magnitude() == 0:
             self.velocity = self.velocity.clamp_magnitude(config.MAX_SPEED)
@@ -100,6 +117,7 @@ class Boid():
         
 
     def render(self, screen):
+        # Render the boid on the pygame screen
         if not self.velocity.magnitude() == 0:
             direction_vector = self.velocity.normalize()
         else:

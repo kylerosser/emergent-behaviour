@@ -23,10 +23,19 @@ while running:
 
     screen.fill("black")
 
+    mouse_down = pygame.mouse.get_pressed()[0]
+    mouse_position = pygame.mouse.get_pos()
+    
     for boid in boids:
-        boid.update(boids)
+        if mouse_down:
+            boid.update(boids, True, mouse_position)
+        else:
+            boid.update(boids, False, None)
         boid.render(screen)
 
+    if mouse_down:
+        pygame.draw.circle(screen, (255, 255, 255, 150), mouse_position, config.TOWARDS_MOUSE_VISION, 1)
+        
     pygame.display.flip()
 
     clock.tick(60)
