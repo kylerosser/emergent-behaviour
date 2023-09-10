@@ -23,7 +23,7 @@ Use `SPACE` to pause/play the simulation and `MOUSE1` to toggle cells while paus
 This results in realistic group formations of animal motion.
 
 ## Ants
-Ant Colony Simulations model how ants forage for food, and bring it back to their nests using only pheromone trails for navigation.
+[Ant Colony Simulations](https://softologyblog.wordpress.com/2020/03/21/ant-colony-simulations/) model how ants forage for food, and bring it back to their nests using only pheromone trails for navigation.
 
 Two different pheromone types are used:
 - A foraging pheromone excreted when the ant is searching for food

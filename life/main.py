@@ -10,7 +10,6 @@ SURVIVE_NEIGHBORS = [2, 3] # A living cell will survive if it has this many neig
 # Common rulesets include: B3/S23 (Conway's Game Of Life) and B36/S23 (HighLife)
 
 cells = [ [ False for y in range(CELLS_Y) ] for x in range(CELLS_X) ]
-
 running = True
 paused = True
 age = 0

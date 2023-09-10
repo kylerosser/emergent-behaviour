@@ -1,9 +1,18 @@
 import pygame
+import config
+from boid import Boid
+
+running = True
+boids = []
+
+boids.append(Boid(pygame.Vector2(500, 200)))
 
 pygame.init()
-screen = pygame.display.set_mode((1080, 720))
+
+screen = pygame.display.set_mode((config.WIDTH, config.HEIGHT))
+pygame.display.set_caption('Boids')
+
 clock = pygame.time.Clock()
-running = True
 
 while running:
     for event in pygame.event.get():
@@ -11,6 +20,10 @@ while running:
             running = False
 
     screen.fill("black")
+
+    for boid in boids:
+        boid.update()
+        boid.render(screen)
 
     pygame.display.flip()
 
