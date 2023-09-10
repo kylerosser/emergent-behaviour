@@ -20,7 +20,7 @@ screen = pygame.display.set_mode((CELLS_X * PIXELS_PER_CELL, CELLS_Y * PIXELS_PE
 pygame.display.set_caption('Game of Life')
 
 clock = pygame.time.Clock()
-font = pygame.font.SysFont(None, 16)
+font = pygame.font.SysFont("Arial", 16)
 
 def update_cells():
     global cells
@@ -70,10 +70,10 @@ def draw_cells():
                 pygame.draw.rect(screen, "white", pygame.Rect(x * PIXELS_PER_CELL, y * PIXELS_PER_CELL, PIXELS_PER_CELL, PIXELS_PER_CELL))
 
 def draw_ui():
-    stats_string = f"age: {age}  fps: {FPS}"
-    stats_image = font.render(stats_string, True, 'gray')
-    controls_string = "[SPACE] to pause/play the simulation; [MOUSE1] to toggle cell"
-    controls_image = font.render(controls_string, True, 'gray')
+    stats_string = f"RULE: B{''.join(map(str, BORN_NEIGHBORS))}/S{''.join(map(str, SURVIVE_NEIGHBORS))}  FPS: {FPS}  AGE: {age}"
+    stats_image = font.render(stats_string, True, 'white')
+    controls_string = "SPACE to pause/play the simulation; MOUSE1 to toggle cell"
+    controls_image = font.render(controls_string, True, 'white')
     screen.blit(stats_image, (10, 10))
     screen.blit(controls_image, (10, 30))
 
