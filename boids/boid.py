@@ -1,19 +1,18 @@
 import pygame
-import config
 import random
-from pygame import gfxdraw
+from config import *
 
 class Boid():
     def __init__(self, position):
         self.position = position
-        self.velocity = pygame.Vector2(random.uniform(-1, 1), random.uniform(-1, 1)).normalize() * config.MAX_SPEED
+        self.velocity = pygame.Vector2(random.uniform(-1, 1), random.uniform(-1, 1)).normalize() * MAX_SPEED
         self.acceleration = pygame.Vector2(0, 0)
 
     def steer_towards_point(self, point):
-        steer_vector = (point - self.position).normalize() * config.MAX_SPEED
+        steer_vector = (point - self.position).normalize() * MAX_SPEED
         steer_vector -= self.velocity
         if steer_vector.magnitude() > 0.000001:
-            steer_vector = steer_vector.clamp_magnitude(config.MAX_FORCE)
+            steer_vector = steer_vector.clamp_magnitude(MAX_FORCE)
         return steer_vector
 
     def separation(self, boids):
@@ -22,7 +21,7 @@ class Boid():
         n = 0
         for other_boid in boids:
             distance = (other_boid.position - self.position).magnitude()
-            if distance > 0 and distance < config.DESIRED_SEPARATION:
+            if distance > 0 and distance < DESIRED_SEPARATION:
                 steer_vector += (self.position - other_boid.position).normalize() / distance
                 n += 1
         
@@ -31,10 +30,10 @@ class Boid():
 
         if steer_vector.magnitude() > 0:
             steer_vector = steer_vector.normalize()
-            steer_vector *= config.MAX_SPEED
+            steer_vector *= MAX_SPEED
             steer_vector -= self.velocity
             if steer_vector.magnitude() > 0.000001:
-                steer_vector = steer_vector.clamp_magnitude(config.MAX_FORCE)
+                steer_vector = steer_vector.clamp_magnitude(MAX_FORCE)
         
         return steer_vector
 
@@ -44,17 +43,17 @@ class Boid():
         n = 0
         for other_boid in boids:
             distance = (other_boid.position - self.position).magnitude()
-            if distance < config.MAX_ALIGNMENT_VISION:
+            if distance < MAX_ALIGNMENT_VISION:
                 velocity_sum += other_boid.velocity
                 n += 1
         
         if n > 0:
             average_velocity = velocity_sum / n
             steer_vector = average_velocity.normalize()
-            steer_vector *= config.MAX_SPEED
+            steer_vector *= MAX_SPEED
             steer_vector -= self.velocity
             if steer_vector.magnitude() > 0.00001:
-                steer_vector.clamp_magnitude(config.MAX_FORCE)
+                steer_vector.clamp_magnitude(MAX_FORCE)
             return steer_vector
         else:
             return pygame.Vector2(0, 0)
@@ -66,7 +65,7 @@ class Boid():
         n = 0
         for other_boid in boids:
             distance = (other_boid.position - self.position).magnitude()
-            if distance < config.MAX_COHESION_VISION:
+            if distance < MAX_COHESION_VISION:
                 position_sum += other_boid.position
                 n += 1
 
@@ -92,28 +91,28 @@ class Boid():
         # If mouse button is down, apply the mouse attraction rule
         if move_towards_mouse:
             distance = (mouse_position - self.position).magnitude()
-            if distance < config.TOWARDS_MOUSE_VISION:
+            if distance < TOWARDS_MOUSE_VISION:
                 towards_mouse_velocity = self.steer_towards_point(mouse_position)
         
         # Weight each velocity to taste, and add to acceleration
-        self.acceleration += seperation_velocity * config.SEPARATION_WEIGHT
-        self.acceleration += alignment_velocity * config.ALIGNMENT_WEIGHT
-        self.acceleration += cohesion_velocity * config.COHESION_WEIGHT
-        self.acceleration += towards_mouse_velocity * config.TOWARDS_MOUSE_WEIGHT
+        self.acceleration += seperation_velocity * SEPARATION_WEIGHT
+        self.acceleration += alignment_velocity * ALIGNMENT_WEIGHT
+        self.acceleration += cohesion_velocity * COHESION_WEIGHT
+        self.acceleration += towards_mouse_velocity * TOWARDS_MOUSE_WEIGHT
 
         # Step velocity/position values
         self.velocity += self.acceleration
         if not self.velocity.magnitude() == 0:
-            self.velocity = self.velocity.clamp_magnitude(config.MAX_SPEED)
+            self.velocity = self.velocity.clamp_magnitude(MAX_SPEED)
         self.position += self.velocity
         self.acceleration *= 0
         
         # Wrap-around borders of screen
         border_tolerance = 10
-        if self.position.x < -border_tolerance: self.position.x = config.WIDTH + border_tolerance
-        if self.position.x > config.WIDTH + border_tolerance: self.position.x = -border_tolerance
-        if self.position.y < -border_tolerance: self.position.y = config.HEIGHT + border_tolerance
-        if self.position.y > config.HEIGHT + border_tolerance: self.position.y = -border_tolerance
+        if self.position.x < -border_tolerance: self.position.x = WIDTH + border_tolerance
+        if self.position.x > WIDTH + border_tolerance: self.position.x = -border_tolerance
+        if self.position.y < -border_tolerance: self.position.y = HEIGHT + border_tolerance
+        if self.position.y > HEIGHT + border_tolerance: self.position.y = -border_tolerance
         
 
     def render(self, screen):

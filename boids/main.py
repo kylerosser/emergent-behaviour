@@ -1,17 +1,17 @@
 import pygame
-import config
 import random
+from config import *
 from boid import Boid
 
 running = True
 boids = []
 
-for i in range(config.NUMBER_OF_BOIDS):
-    boids.append(Boid(pygame.Vector2(random.randint(1, config.WIDTH), random.randint(1, config.HEIGHT))))
+for i in range(NUMBER_OF_BOIDS):
+    boids.append(Boid(pygame.Vector2(random.randint(1, WIDTH), random.randint(1, HEIGHT))))
 
 pygame.init()
 
-screen = pygame.display.set_mode((config.WIDTH, config.HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Boids')
 
 clock = pygame.time.Clock()
@@ -34,7 +34,7 @@ while running:
         boid.render(screen)
 
     if mouse_down:
-        pygame.draw.circle(screen, (255, 255, 255, 150), mouse_position, config.TOWARDS_MOUSE_VISION, 1)
+        pygame.draw.circle(screen, (255, 255, 255, 150), mouse_position, TOWARDS_MOUSE_VISION, 1)
         
     pygame.display.flip()
 

@@ -1,13 +1,5 @@
 import pygame
-
-CELLS_X = 70 
-CELLS_Y = 70
-PIXELS_PER_CELL = 10
-FPS = 10
-BORN_NEIGHBORS = [3] # A dead cell will be reborn if it has this many neighbors
-SURVIVE_NEIGHBORS = [2, 3] # A living cell will survive if it has this many neighbors
-# ( All other living cells die )
-# Common rulesets include: B3/S23 (Conway's Game Of Life) and B36/S23 (HighLife)
+from config import *
 
 cells = [ [ False for y in range(CELLS_Y) ] for x in range(CELLS_X) ]
 running = True

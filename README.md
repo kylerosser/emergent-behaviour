@@ -1,16 +1,16 @@
 # Emergent Behaviour
 A collection of graphics simulations that showcase how simple rules can be used to form complex emergent behaviour.
 
-Each example can be run using the `main.py` file in its corresponding folder.
+Each example can be run using the `main.py` file in its corresponding folder. Constants can be changed in `config.py`.
 
 [Pygame](https://github.com/pygame/pygame) must be installed (`pip install pygame`)
 
 ## Life
-[Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) is a cellular automaton consisting of a grid of cells that evolve over discrete time steps based on simple rules, leading to cool patterns. The standard rules are as follows:
+[Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) is a grid-based cellular automaton that evolves over time based on simple rules. The standard rules are as follows:
 - A dead cell with 3 alive neighbors is reborn
 - An alive cell with 2 or 3 alive neighbors survives
 - All other cells die
-These rules are applied across all cells simultaneously at each iteration of the simulation.
+At each iteration, these rules are applied across all cells simultaneously.
 
 Use `SPACE` to pause/play the simulation and `MOUSE1` to toggle cells while paused.
 
@@ -22,7 +22,7 @@ Use `SPACE` to pause/play the simulation and `MOUSE1` to toggle cells while paus
 - Alignment (matching the direction of nearby boids)
 - Cohesion (moving toward the average position of nearby boids)
 
-This results in realistic group formations of animal motion.
+This results in realistic flocking motion.
 
 Use `MOUSE1` to steer boids towards your mouse.
 
