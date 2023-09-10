@@ -14,6 +14,8 @@ These rules are applied across all cells simultaneously at each iteration of the
 
 Use `SPACE` to pause/play the simulation and `MOUSE1` to toggle cells while paused.
 
+![Video Example](https://gyazo.com/808a513c629219a0107e01a2368792ab)
+
 ## Boids
 [Boids](https://en.wikipedia.org/wiki/Boids) (bird-oids) is a simulation that models the flocking behavior of birds by applying three basic rules: 
 - Separation (avoiding collisions)
