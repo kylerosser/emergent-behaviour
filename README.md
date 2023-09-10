@@ -1,5 +1,5 @@
 # Emergent Behaviour
-A collection of graphics simulations that showcase how simple rules can be used to form complex emergent behaviours.
+A collection of graphics simulations that showcase how simple rules can be used to form complex emergent behaviour.
 
 Each example can be run using the `main.py` file in its corresponding folder.
 
@@ -10,13 +10,25 @@ Each example can be run using the `main.py` file in its corresponding folder.
 - A dead cell with 3 alive neighbors is reborn
 - An alive cell with 2 or 3 alive neighbors survives
 - All other cells die
-These rules are applied across all cells simultaneously each iteration of the simulation.
+These rules are applied across all cells simultaneously at each iteration of the simulation.
+
+Use `SPACE` to pause/play the simulation and `MOUSE1` to toggle cells while paused.
 
 ## Boids
 [Boids](https://en.wikipedia.org/wiki/Boids) (bird-oids) is a simulation that models the flocking behavior of birds by applying three basic rules: 
 - Separation (avoiding collisions)
 - Alignment (matching the direction of nearby boids)
 - Cohesion (moving toward the average position of nearby boids)
+
 This results in realistic group formations of animal motion.
 
-## Ant Colony Simulation
+## Ants
+Ant Colony Simulations model how ants forage for food, and bring it back to their nests using only pheromone trails for navigation.
+
+Two different pheromone types are used:
+- A foraging pheromone excreted when the ant is searching for food
+- A retreating pheromone excreted when the ant is bringing food back to the nest
+
+While foraging, the ant moves in the direction with the greatest density of retreating pheromone, and while retreating, the foraging pheromone.
+
+The pheromones are blurred each iteration to simulate the diffusion of pheromones as they would in a real-life environment.
