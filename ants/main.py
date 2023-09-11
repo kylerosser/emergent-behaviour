@@ -32,7 +32,7 @@ def update_ants():
     for ant in ants:
         ant.update(foraging_pheromone, retreating_pheromone, food)
 
-def blur_cells_1(cells):
+def blur_cells(cells):
     new_cells = [[0 for y in range(CELLS_Y)] for x in range(CELLS_X)]
     for x in range(CELLS_X):
         for y in range(CELLS_Y):
@@ -54,7 +54,7 @@ def blur_cells_1(cells):
             new_cells[x][y] = average
     return new_cells
 
-def blur_cells(cells):
+def blur_cells_2(cells):
     for x in range(CELLS_X):
         for y in range(CELLS_Y):
             cells[x][y] = cells[x][y] * DECAY_FACTOR
@@ -109,8 +109,8 @@ while running:
 
     screen.fill("black")
 
-    blur_cells(foraging_pheromone)
-    blur_cells(retreating_pheromone)
+    foraging_pheromone = blur_cells(foraging_pheromone)
+    retreating_pheromone = blur_cells(retreating_pheromone)
     update_ants()
 
     draw_cells()
