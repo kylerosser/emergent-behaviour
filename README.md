@@ -28,7 +28,7 @@ Use `MOUSE1` to steer boids towards your mouse.
 
 <img src="images/boids.gif" width="300" height="300">
 
-## Ants
+## Ants (work in progress, not functional)
 [Ant Colony Simulations](https://softologyblog.wordpress.com/2020/03/21/ant-colony-simulations/) model how ants forage for food, and bring it back to their nests using only pheromone trails for navigation.
 
 Two different pheromone types are used:
