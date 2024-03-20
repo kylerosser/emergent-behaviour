@@ -6,7 +6,7 @@ running = True
 paused = True
 age = 0
 
-pygame.init()
+pygame.init() 
 
 screen = pygame.display.set_mode((CELLS_X * PIXELS_PER_CELL, CELLS_Y * PIXELS_PER_CELL))
 pygame.display.set_caption('Game of Life')

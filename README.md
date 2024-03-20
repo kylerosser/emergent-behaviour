@@ -27,14 +27,3 @@ This results in realistic flocking motion.
 Use `MOUSE1` to steer boids towards your mouse.
 
 <img src="images/boids.gif" width="300" height="300">
-
-## Ants (work in progress, not functional)
-[Ant Colony Simulations](https://softologyblog.wordpress.com/2020/03/21/ant-colony-simulations/) model how ants forage for food, and bring it back to their nests using only pheromone trails for navigation.
-
-Two different pheromone types are used:
-- A foraging pheromone excreted when the ant is searching for food
-- A retreating pheromone excreted when the ant is bringing food back to the nest
-
-While foraging, the ant moves in the direction with the greatest density of retreating pheromone, and while retreating, the foraging pheromone.
-
-The pheromones are blurred each iteration to simulate the diffusion of pheromones as they would in a real-life environment.
